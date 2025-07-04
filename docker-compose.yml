@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  optimizer:
+    build: .
+    container_name: wasserstein_optimizer
+    ports:
+      - "5000:5000"
+    restart: always
