@@ -1,10 +1,13 @@
-from flask import Flask, request, jsonify
+# wasserstein_app/app.py
+
+from flask import Blueprint, request, jsonify
 import numpy as np
 from utils.optimizer import robust_optimize
 
-app = Flask(__name__)
+# 🔥 Create blueprint
+wasserstein_bp = Blueprint("wasserstein", __name__)
 
-@app.route("/optimize", methods=["POST"])
+@wasserstein_bp.route("/optimize", methods=["POST"])
 def optimize_portfolio():
     data = request.json
 
@@ -21,7 +24,7 @@ def optimize_portfolio():
     weights = robust_optimize(mu, cov, rho, lambda_reg, gamma, cap)
     return jsonify({"optimized_weights": weights.tolist()})
 
-@app.route("/example", methods=["GET"])
+@wasserstein_bp.route("/example", methods=["GET"])
 def example():
     n_assets = 5
     mean = np.random.rand(n_assets) * 0.05
@@ -34,6 +37,3 @@ def example():
         "cov": cov.tolist(),
         "optimized_weights": weights.tolist()
     })
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
