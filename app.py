@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, jsonify
 import numpy as np
-from utils.optimizer import robust_optimize
+from .utils.optimizer import robust_optimize
 
 # 🔥 Create blueprint
 wasserstein_bp = Blueprint("wasserstein", __name__)
